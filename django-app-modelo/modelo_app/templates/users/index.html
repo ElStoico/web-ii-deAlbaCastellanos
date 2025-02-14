@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/users.css' %}">
 </head>
 <body>
     <h1>Lista de Usuarios</h1>
-    <ul>
-        {% for user in users %}
-            <li>{{ user.name }} - {{ user.email }}</li>
-        {% endfor %}
-    </ul>
+    <section>
+        <div class="g">
+            {% for user in users %}
+                <li>
+                    <img src="{{user.photo}}" style="width:200px;height:200px;"/> 
+                    {{ user.name }} - {{ user.email }}
+                </li>
+            {% endfor %}
+        </div>
+    </section>
 </body>
 </html>
