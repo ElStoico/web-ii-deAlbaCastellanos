@@ -9,11 +9,7 @@
     <section>
         <div class="g">
             {% for user in users %}
-                {% include 'components/UserCard.html' with name=item.name email=item.email id=item.id%}
-
-
-
-
+                {% include 'components/UserCard.html' with name=user.name email=user.email id=user.id photo=user.photo %}
                 <!--
                 <li>
                     <img src="{{user.photo}}" style="width:200px;height:200px;"/> 
