@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 import json
 
-from .models import Users
+from .models import Users, User_Adress
 
 def usersIndex(request):
     # Obtener todos los usuarios sin direcciones
@@ -47,3 +47,21 @@ def userDetail(request, id):
         "user":user
     }
     return render(request, "users/detail.html", data)
+
+def editUser(request, id):
+    user = get_object_or_404(Users, id=id)
+    addresses = User_Adress.objects.filter(user_id=user)
+
+    if request.method == "POST":
+        user.name = request.POST.get("name")
+        user.email = request.POST.get("email")
+        user.age = request.POST.get("age")
+        user.rfc = request.POST.get("rfc")
+        user.photo = request.POST.get("photo")
+        user.save()
+        return redirect('indexUsers')
+
+    return render(request, 'users/edit.html', {'user': user, 'addresses': addresses})
+
+def home(request):
+    return render(request, 'home/home.html')

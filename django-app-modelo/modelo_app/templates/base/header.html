@@ -1,11 +1,13 @@
 <nav>
-    <div>
+    <div class="header_container">
         <div class="menu-logo">
             <a>Logo</a>
         </div>
         <div class="menu-options">
             <div>
-                <a>Home</a>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'indexUsers' %}">Usuarios</a>
+                <a href="{% url 'indexOrders' %}">Orders</a>
             </div>
         </div>
     </div>
