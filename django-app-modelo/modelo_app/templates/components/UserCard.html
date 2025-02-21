@@ -1,0 +1,18 @@
+<h1>Este es el componente de user card</h1>
+
+<div class="user_card_container">
+    <div>
+        <img src="" alt="">
+    </div>
+    <div class="user-data">
+        <p><strong>Name</strong> <br> {{name}}</p>
+        <p><strong>Email</strong> <br> {{email}}</p>
+    </div>
+    <div class="user-actions">
+        {% if user.id %}
+            <a href="{% url 'userDetail' user.id %}">Ver</a>
+        {% else %}
+            <p>ID no disponible</p>
+        {% endif %}
+    </div>
+</div>

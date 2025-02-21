@@ -1,23 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/users.css' %}">
-</head>
-<body>
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/users.css' %}">
+{% endblock %}
+
+
+{% block content %}
     <h1>Lista de Usuarios</h1>
     <section>
         <div class="g">
             {% for user in users %}
+                {% include 'components/UserCard.html' with name=item.name email=item.email id=item.id%}
+
+
+
+
+                <!--
                 <li>
                     <img src="{{user.photo}}" style="width:200px;height:200px;"/> 
                     {{ user.name }} - {{ user.email }}
                 </li>
+                -->
             {% endfor %}
         </div>
     </section>
-</body>
-</html>
+{% endblock %}
