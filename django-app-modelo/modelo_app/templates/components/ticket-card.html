@@ -1,0 +1,8 @@
+{% load static %}
+<div class="ticket-card">
+    <img src="{% static 'images/tickets.jpg' %}" alt="Boleto" class="ticket-image">
+    <h3>Boleto {{ ticket.id }}</h3>
+    <p>Evento: {{ ticket.evento.name }}</p>
+    <p>Precio: ${{ ticket.precio }}</p>
+    <button class="buy-button">Comprar</button>
+</div>

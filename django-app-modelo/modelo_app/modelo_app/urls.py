@@ -16,11 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users import views as main_views
 
 urlpatterns = [
-    path("", main_views.home, name="home"),  # Ruta para la página principal
-    path("orders/", include("orders.urls")),
-    path("admin/", admin.site.urls),
-    path("users/", include("users.urls")),
+    path('admin/', admin.site.urls),
+    path('', include('examen.urls')),  # Asegúrate de que esta línea es correcta
 ]

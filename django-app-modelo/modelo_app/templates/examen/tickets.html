@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/tickets.css' %}">
+{% endblock %}
+{% block content %}
+<div class="tickets-container">
+    {% for ticket in tickets %}
+        {% include 'components/ticket-card.html' %}
+    {% endfor %}
+</div>
+{% endblock %}

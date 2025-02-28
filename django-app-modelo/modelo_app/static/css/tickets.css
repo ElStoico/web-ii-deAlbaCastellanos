@@ -1,0 +1,41 @@
+.ticket-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin: 10px;
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ticket-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.buy-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.buy-button:hover {
+    background-color: #555;
+}

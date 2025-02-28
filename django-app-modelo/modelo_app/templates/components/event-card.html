@@ -1,0 +1,10 @@
+{% load static %}
+<div class="event-card">
+    <img src="{% static 'images/event.jpg' %}" alt="Evento" class="event-image">
+    <div class="event-details">
+        <h3>Evento #{{ event.id }}</h3>
+        <p><strong>Localidad:</strong> {{ event.localidad.name }}</p>
+        <p><strong>Descripción:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p> <!-- {{ event.descripcion }} --> 
+        <button class="tickets-button">Boletos</button>
+    </div>
+</div>

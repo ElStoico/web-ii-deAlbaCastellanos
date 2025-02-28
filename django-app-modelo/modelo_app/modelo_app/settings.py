@@ -31,8 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "users.apps.UsersConfig",
-    "orders.apps.OrdersConfig",
+    'examen',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

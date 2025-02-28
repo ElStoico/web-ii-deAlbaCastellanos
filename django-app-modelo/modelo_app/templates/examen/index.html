@@ -1,0 +1,53 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+{% block content %}
+<div class="banner-container">
+    <img src="{% static 'images/banner1.jpg' %}" alt="Banner 1" class="banner">
+    <img src="{% static 'images/banner2.jpg' %}" alt="Banner 2" class="banner">
+    <img src="{% static 'images/banner3.jpg' %}" alt="Banner 3" class="banner">
+    <img src="{% static 'images/banner4.jpg' %}" alt="Banner 4" class="banner">
+    <img src="{% static 'images/banner5.jpg' %}" alt="Banner 5" class="banner">
+</div>
+
+<h2>NOTICIAS</h2>
+<div class="content-container">
+    <div class="news-section">
+        <h2>NOTICIAS</h2>
+        <div class="news-container">
+            <div class="news-item">
+                <img src="{% static 'images/news1.jpg' %}" alt="Noticia 1" class="news-image">
+                <div class="news-details">
+                    <h3>Noticia</h3>
+                    <p>El carnaval de Barranquilla es una de las festividades más importantes de Colombia...</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <img src="{% static 'images/news1.jpg' %}" alt="Noticia 2" class="news-image">
+                <div class="news-details">
+                    <h3>Noticia</h3>
+                    <p>El carnaval de Barranquilla es una de las festividades más importantes de Colombia...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="events-section">
+        <h2>Eventos</h2>
+        <div class="events-container">
+            {% for event in eventos %}
+                <div class="event-card">
+                    <img src="{% static 'images/event.jpg' %}" alt="Evento" class="event-image">
+                    <div class="event-details">
+                        <h3>Evento #{{ event.id }}</h3>
+                        <p><strong>Localidad:</strong> {{ event.localidad.name }}</p>
+                        <p><strong>Descripción:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
