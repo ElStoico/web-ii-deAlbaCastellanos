@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
 <h1>Eventos</h1>
+<a href="{% url 'create_event' %}" class="add-event-button">Añadir Evento</a>
 <div class="events-container">
     {% for event in eventos %}
         {% include 'components/event-card.html' %}

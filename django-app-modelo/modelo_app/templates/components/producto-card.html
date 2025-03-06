@@ -1,0 +1,8 @@
+{% load static %}
+<div class="producto-card">
+    <img src="{% static 'images/producto.jpg' %}" alt="Imagen del producto" class="producto-image">
+    <h3>Producto {{ producto.id }}</h3>
+    <p>Nombre: {{ producto.name }}</p>
+    <p>Precio: ${{ producto.precio }}</p>
+    <button class="buy-button">Comprar</button>
+</div>

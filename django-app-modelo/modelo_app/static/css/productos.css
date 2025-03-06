@@ -1,4 +1,11 @@
-.event-card {
+.productos_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.producto-card {
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 8px;
@@ -6,33 +13,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
-.event-image {
-    width: 40%;
-    height: 50%;
-    object-fit: cover;
+.producto-image {
+    width: 80%;
+    height: 150px;
+    object-fit: contain;
     border-radius: 8px;
+    background-color: #fff;
 }
 
-.event-details {
-    padding: 15px;
-    padding-top: 10px;
-    flex: 1;
-}
-
-h3 {
-    font-size: 18px;
-    margin: 0 0 10px 0;
-}
-
-p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-.tickets-button {
+.buy-button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -42,22 +34,11 @@ p {
     transition: background-color 0.3s;
 }
 
-.button-div{
-    margin-top: 10%;
-}
-
-.tickets-button:hover {
+.buy-button:hover {
     background-color: #0056b3;
 }
 
-.events-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-.add-event-button{
+.add-product-button{
     background-color: #0056b3;
     color: white;
     padding: 10px 20px;

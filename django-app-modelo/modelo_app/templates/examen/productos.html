@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/productos.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Productos</h1>
+<a href="{% url 'create_product' %}" class="add-product-button">Añadir Producto</a>
+<div class="productos_container">
+    {% for producto in productos %}
+        {% include 'components/producto-card.html' %}
+    {% endfor %}
+</div>
+{% endblock %}

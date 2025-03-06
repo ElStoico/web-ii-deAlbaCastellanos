@@ -1,14 +1,13 @@
 <nav>
     <div class="header_container">
-        <div class="menu-logo">
-            <a>Logo</a>
-        </div>
-        <div class="menu-options">
-            <div>
+        <div class="menu_text">
+            <a id="Logo">Logo</a>
+            <div class="menu-options">
+                
                 <a href="{% url 'index_examen' %}">Index</a>
                 <a href="{% url 'eventos' %}">Eventos</a>
                 <a href="{% url 'tickets' %}">Boletos</a>
-                <a>Productos</a>
+                <a href="{% url 'productos' %}">Productos</a>
                 <a href="{% url 'admin:index' %}">Admin</a>
             </div>
         </div>

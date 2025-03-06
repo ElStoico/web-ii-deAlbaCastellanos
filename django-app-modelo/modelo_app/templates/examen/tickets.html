@@ -4,9 +4,14 @@
 <link rel="stylesheet" href="{% static 'css/tickets.css' %}">
 {% endblock %}
 {% block content %}
+<h1>Boletos para {{ evento.nombre }}</h1>
 <div class="tickets-container">
-    {% for ticket in tickets %}
-        {% include 'components/ticket-card.html' %}
-    {% endfor %}
+    {% if tickets %}
+        {% for ticket in tickets %}
+            {% include 'components/ticket-card.html' %}
+        {% endfor %}
+    {% else %}
+        <p>No se encontraron boletos para el evento</p>
+    {% endif %}
 </div>
 {% endblock %}

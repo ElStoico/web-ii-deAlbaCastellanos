@@ -1,6 +1,6 @@
 .banner-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
     margin-bottom: 20px;
 }
@@ -13,7 +13,8 @@
 }
 
 .content-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
@@ -22,33 +23,96 @@
 }
 
 .news-container, .events-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
-.news-item, .event-card {
+.news-item {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-height: 400px;
+}
+
+.news-item h3 {
+    font-size: 28px;
+}
+
+.news-item p {
+    font-size: 18px;
+}
+
+.event-card {
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 15px;
+    min-height: 250px;
 }
 
-.news-image, .event-image {
-    width: 250px;
+.event-card h3{
+    font-size: 24px;
+}
+
+.event-card p {
+    font-size: 16px;
+}
+
+.news-image {
+    width: 70%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.event-image {
+    width: 50%;
     height: 200px;
     object-fit: cover;
     border-radius: 8px;
 }
 
-.news-details, .event-details {
+.news-details {
     flex: 1;
+    overflow: auto;
+}
+
+h1{
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 h2 {
     text-align: center;
+    font-size: 40px;
     margin: 40px 0 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.news-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.events-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.event-details {
+    flex: 1;
+    overflow: auto;
 }

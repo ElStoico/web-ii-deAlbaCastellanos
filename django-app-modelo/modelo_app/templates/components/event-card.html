@@ -5,6 +5,8 @@
         <h3>Evento #{{ event.id }}</h3>
         <p><strong>Localidad:</strong> {{ event.localidad.name }}</p>
         <p><strong>Descripción:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p> <!-- {{ event.descripcion }} --> 
-        <button class="tickets-button">Boletos</button>
+        <div class="button-div">
+            <a href="{% url 'tickets_por_evento' event.id %}" class="tickets-button">Boletos</a>
+        </div>
     </div>
 </div>
