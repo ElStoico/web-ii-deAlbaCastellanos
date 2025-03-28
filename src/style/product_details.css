@@ -1,0 +1,42 @@
+.page-container
+{
+  background-color: white;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-details-page-container
+{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 10%;
+  column-gap: 2rem;
+}
+
+.product-image-container
+{
+  width: 100%;
+  height: 100%;
+}
+
+.product-details-container
+{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.toast-bar
+{
+  text-align: start;
+  font-size: small;
+  color: gray;
+}
+
+
