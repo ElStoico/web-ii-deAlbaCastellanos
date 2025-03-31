@@ -1,4 +1,4 @@
-export default function ProductItem({ id, title, description, images })
+export default function ProductItem({ id, title, description, images, price })
 {
     return (
         <div className="product-list-item">
@@ -12,7 +12,7 @@ export default function ProductItem({ id, title, description, images })
                 <p>
                     {description}
                 </p>
-
+                <p className="precio-p">Precio: ${price}</p>
             </div>
             <a href={`/product/${id}`}>Ver productos</a>
         </div>

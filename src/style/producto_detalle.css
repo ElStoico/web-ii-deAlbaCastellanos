@@ -1,0 +1,88 @@
+/* src/style/products.css */
+.product-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image-container {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image {
+    width: 80%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product-details-container {
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-details-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.product-details-container p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.precio-p {
+    font-weight: bold;
+    color: black;
+}
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.add-to-cart-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    color: red;
+    margin-top: 10px;
+}
+
+.cart-button-container{
+    position: relative;
+    left: 45rem;
+}
