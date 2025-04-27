@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import MyRouters from "../../router/Router";
 import { useAuthProtection } from '../Auth';
-
+import "../../style/menu.css";
 
 export default function Menu(){
     useAuthProtection();
@@ -24,6 +24,9 @@ export default function Menu(){
                         <li><Link to="/login">Login</Link></li>
                         <li><Link to="/products">Products</Link></li>
                         <li><Link to="/product-details">Product Details</Link></li>
+                        <li><Link to="/create-product">Crear Producto</Link></li>
+                        <li><Link to="/cart">🛒 Carrito</Link></li>
+                        <li><Link to="/usereducer-component">usereducer component</Link></li>
                     </ul>
                     </nav>
                 

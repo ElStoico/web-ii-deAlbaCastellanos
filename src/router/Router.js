@@ -7,7 +7,9 @@ import Login from "../page/Login"
 import ProductList from '../page/ProductList'
 import ProductDetails from "../page/ProductDetails"
 import Product from '../page/Product'
-
+import CreateProduct from '../page/CreateProduct'
+import Cart from '../page/Cart'
+import ReducerScreen from '../page/ReducerScreen'
 
 export default function MyRouters()
 {
@@ -20,6 +22,9 @@ export default function MyRouters()
             <Route path="/products" element={<ProductList/>}/>
             <Route path="/product-details" element={<ProductDetails/>}/>
             <Route path="/product/:id" element={<Product />} />
+            <Route path="/create-product" element={<CreateProduct />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/usereducer-component" element={<ReducerScreen />} />
         </Routes>
     )
 }
