@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 1rem;
+}
+.chapter-card {
+  width: 22rem;
+  background: rgba(255,255,255,1);
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chapter-title {
+  font-family: Irish Grover;
+  font-size: 1.5rem;
+  color: rgba(0,0,0,1);
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.chapter-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.chapter-episode, .chapter-airdate {
+  font-family: Irish Grover;
+  font-size: 0.875rem;
+  color: rgba(0,0,0,1);
+  text-align: center;
+}
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+.like-button, .dislike-button {
+  width: 6rem;
+  height: 2rem;
+  border-radius: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.like-button {
+  background: #4CAF50;
+}
+.dislike-button {
+  background: #f44336;
+}
+.like-text, .dislike-text {
+  color: white;
+  font-family: Irish Grover;
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+.like-icon, .dislike-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+}
+.details-button {
+  width: 8rem;
+  height: 2rem;
+  background: #2196F3;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.details-text {
+  color: white;
+  font-family: Irish Grover;
+  font-size: 1rem;
+}
