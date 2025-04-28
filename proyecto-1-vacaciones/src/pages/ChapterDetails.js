@@ -40,9 +40,9 @@ const ChapterDetails = () => {
   if (!chapter) return <div className="error">No se encontró el capítulo</div>;
 
   return (
-    <div className="chapter-details">
-      <h1 className="chapter-title">{chapter.name}</h1>
-      <div className="chapter-info">
+    <div className="chapter-details-container">
+      <h1 className="chapter-details-title">{chapter.name}</h1>
+      <div className="chapter-details-info">
         <p className="episode-code">Código: {chapter.episode}</p>
         <p className="air-date">Fecha de estreno: {chapter.air_date}</p>
       </div>
