@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../style/component/characterCard.css';
 import likeIcon from '../images/like.png';
 import { getCharacterLikesInEpisode, setCharacterLikesInEpisode } from '../functions/storage';
 
 const CharacterCard = ({ characterId, episodeId, characterName, imageUrl, onDetailsClick, onLikeClick, disableLike = false }) => {
+  const navigate = useNavigate();
   const [likes, setLikes] = useState(0);
   const [showLikeCount, setShowLikeCount] = useState(false);
 
@@ -26,21 +28,25 @@ const CharacterCard = ({ characterId, episodeId, characterName, imageUrl, onDeta
     }
   };
 
+  const handleDetailsClick = () => {
+    navigate(`/character/${characterId}`);
+  };
+
   return (
     <div className="character-card">
-      <div className="character-image" style={{ backgroundImage: `url(${imageUrl})` }}></div>
-      <div className="character-details-btn" onClick={onDetailsClick}>
-        <span className="character-details-text">Más detalles</span>
+      <div className="character-card-image" style={{ backgroundImage: `url(${imageUrl})` }}></div>
+      <div className="character-card-details-btn" onClick={handleDetailsClick}>
+        <span className="character-card-details-text">Más detalles</span>
       </div>
-      <div className={`character-like-btn ${disableLike ? 'disabled' : ''}`} onClick={handleLikeClick}>
-        <span className="character-like-text">Like</span>
+      <div className={`character-card-like-btn ${disableLike ? 'disabled' : ''}`} onClick={handleLikeClick}>
+        <span className="character-card-like-text">Like</span>
         {showLikeCount ? (
           <span className="count-badge">{likes}</span>
         ) : (
-          <img src={likeIcon} alt="Like" className="character-like-icon" />
+          <img src={likeIcon} alt="Like" className="character-card-like-icon" />
         )}
       </div>
-      <span className="character-name">{characterName}</span>
+      <span className="character-card-name">{characterName}</span>
     </div>
   );
 };
