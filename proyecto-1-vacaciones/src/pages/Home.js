@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './base/Navbar';
 import ChapterList from '../components/ChapterList';
 import { useChapters } from '../context/ChapterContext';
 import '../style/Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
   const { state: { chapters, loading, error } } = useChapters();
   const [likedChapters, setLikedChapters] = useState(new Set());
   const [dislikedChapters, setDislikedChapters] = useState(new Set());
@@ -46,8 +48,7 @@ const Home = () => {
   };
 
   const handleDetailsClick = (chapterId) => {
-    // Aquí implementaremos la navegación a los detalles del capítulo
-    console.log('Ver detalles del capítulo:', chapterId);
+    navigate(`/chapter/${chapterId}`);
   };
 
   if (loading) return <div className="loading">Cargando capítulos...</div>;

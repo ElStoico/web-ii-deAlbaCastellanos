@@ -108,3 +108,13 @@ body {
   font-family: Irish Grover;
   font-size: 1rem;
 }
+.count-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  min-width: 24px;
+  text-align: center;
+  display: inline-block;
+}

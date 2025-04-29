@@ -25,11 +25,25 @@
   margin: 0.5rem 0;
 }
 
+.characters-section {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.characters-section:last-child {
+  margin-bottom: 0;
+}
+
 .characters-title {
   font-size: 1.8rem;
   color: #333;
   text-align: center;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
 }
 
 .characters-grid {

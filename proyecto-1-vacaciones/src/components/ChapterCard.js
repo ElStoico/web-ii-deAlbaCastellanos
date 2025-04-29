@@ -1,15 +1,41 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import '../style/component/chapterCard.css';
 import likeIcon from '../images/like.png';
 import dislikeIcon from '../images/dislike.png';
 import placeholderImage from '../images/placeholder.png';
+import { getChapterLikes, setChapterLikes, getChapterDislikes, setChapterDislikes } from '../functions/storage';
 
-const ChapterCard = ({ chapter, onLikeClick, onDislikeClick }) => {
-  const navigate = useNavigate();
+const ChapterCard = ({ chapter, onLikeClick, onDislikeClick, onDetailsClick }) => {
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+  const [showLikeCount, setShowLikeCount] = useState(false);
+  const [showDislikeCount, setShowDislikeCount] = useState(false);
 
-  const handleDetailsClick = () => {
-    navigate(`/chapter/${chapter.id}`);
+  // Cargar contadores guardados al montar el componente
+  useEffect(() => {
+    const savedLikes = getChapterLikes(chapter.id);
+    const savedDislikes = getChapterDislikes(chapter.id);
+    
+    setLikes(savedLikes);
+    setDislikes(savedDislikes);
+    setShowLikeCount(savedLikes > 0);
+    setShowDislikeCount(savedDislikes > 0);
+  }, [chapter.id]);
+
+  const handleLikeClick = () => {
+    const newLikes = likes + 1;
+    setLikes(newLikes);
+    setShowLikeCount(true);
+    setChapterLikes(chapter.id, newLikes);
+    onLikeClick(chapter.id);
+  };
+
+  const handleDislikeClick = () => {
+    const newDislikes = dislikes + 1;
+    setDislikes(newDislikes);
+    setShowDislikeCount(true);
+    setChapterDislikes(chapter.id, newDislikes);
+    onDislikeClick(chapter.id);
   };
 
   return (
@@ -28,18 +54,26 @@ const ChapterCard = ({ chapter, onLikeClick, onDislikeClick }) => {
         
         <div className="chapter-actions">
           <div className="buttons-container">
-            <div className="like-button" onClick={() => onLikeClick(chapter.id)}>
+            <div className="like-button" onClick={handleLikeClick}>
               <span className="like-text">Like</span>
-              <img src={likeIcon} alt="Like" className="like-icon" />
+              {showLikeCount ? (
+                <span className="count-badge">{likes}</span>
+              ) : (
+                <img src={likeIcon} alt="Like" className="like-icon" />
+              )}
             </div>
             
-            <div className="dislike-button" onClick={() => onDislikeClick(chapter.id)}>
+            <div className="dislike-button" onClick={handleDislikeClick}>
               <span className="dislike-text">Dislike</span>
-              <img src={dislikeIcon} alt="Dislike" className="dislike-icon" />
+              {showDislikeCount ? (
+                <span className="count-badge">{dislikes}</span>
+              ) : (
+                <img src={dislikeIcon} alt="Dislike" className="dislike-icon" />
+              )}
             </div>
           </div>
           
-          <div className="details-button" onClick={handleDetailsClick}>
+          <div className="details-button" onClick={() => onDetailsClick(chapter.id)}>
             <span className="details-text">Más detalles</span>
           </div>
         </div>
