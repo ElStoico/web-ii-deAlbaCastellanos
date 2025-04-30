@@ -14,7 +14,7 @@ const Navbar = () => {
             <button className="navbar-link" onClick={() => navigate('/')}>Inicio</button>
           </li>
           <li className="navbar-item">
-            <button className="navbar-link">Estática</button>
+            <button className="navbar-link" onClick={() => navigate('/static')}>Estática</button>
           </li>
           <li className="navbar-item">
             <button className="navbar-link" onClick={() => navigate('/character-search')}>Búsqueda de Personajes</button>

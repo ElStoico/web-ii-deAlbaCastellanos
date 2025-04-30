@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CharacterCard from '../components/CharacterCard';
 import { getTopCharactersInEpisode, getCharacterLikesInEpisode } from '../functions/storage';
+import Navbar from './base/Navbar';
 import '../style/component/chapterDetails.css';
 
 const ChapterDetails = () => {
@@ -106,6 +107,7 @@ const ChapterDetails = () => {
 
   return (
     <div className="chapter-details-container">
+      <Navbar />
       <h1 className="chapter-details-title">{chapter.name}</h1>
       <div className="chapter-details-info">
         <p className="episode-code">Código: {chapter.episode}</p>

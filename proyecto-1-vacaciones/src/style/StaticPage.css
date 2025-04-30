@@ -1,0 +1,44 @@
+.static-page {
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 5rem;
+}
+
+.banner-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 300px;
+}
+
+.banner-right {
+  flex: 1;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: 300px;
+}
+
+.banner-right h1 {
+  margin: 0;
+  font-size: 2rem;
+  text-align: center;
+  color: #f0f0f0;
+}

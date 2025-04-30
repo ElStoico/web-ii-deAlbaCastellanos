@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import ChapterDetails from '../pages/ChapterDetails';
 import CharacterSearch from '../pages/CharacterSearch';
 import CharacterDetails from '../pages/CharacterDetails';
+import StaticPage from '../pages/staticPage';
 
 const AppRouter = () => {
   return (
@@ -12,6 +13,7 @@ const AppRouter = () => {
       <Route path="/chapter/:id" element={<ChapterDetails />} />
       <Route path="/character-search" element={<CharacterSearch />} />
       <Route path="/character/:id" element={<CharacterDetails />} />
+      <Route path="/static" element={<StaticPage />} />
     </Routes>
   );
 };
