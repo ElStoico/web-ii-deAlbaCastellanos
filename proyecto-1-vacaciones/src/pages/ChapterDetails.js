@@ -1,158 +1,208 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CharacterCard from '../components/CharacterCard';
-import { getTopCharactersInEpisode, getCharacterLikesInEpisode } from '../functions/storage';
+import { 
+  getTopCharactersInEpisode,
+  getCachedEpisode,
+  setCachedEpisode,
+  getCachedCharacter,
+  setCachedCharacter
+} from '../functions/storage';
 import Navbar from './base/Navbar';
 import '../style/component/chapterDetails.css';
+
+const MAX_RETRIES = 5;
+const RETRY_DELAY = 2000; // 2 segundos
+const TIMEOUT = 10000; // 10 segundos
 
 const ChapterDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [chapter, setChapter] = useState(null);
+  const [characters, setCharacters] = useState([]);
   const [episodeCharacters, setEpisodeCharacters] = useState([]);
   const [topCharacters, setTopCharacters] = useState([]);
-  const [allCharacters, setAllCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [likeCount, setLikeCount] = useState(0);
+  const [retryCount, setRetryCount] = useState(0);
 
-  useEffect(() => {
-    const fetchChapterDetails = async () => {
-      if (!id) {
-        setError('ID del capítulo no proporcionado');
-        setLoading(false);
-        return;
-      }
+  const fetchWithRetry = async (url, options = {}, retries = MAX_RETRIES) => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
 
-      try {
-        // Obtener detalles del capítulo
-        const chapterResponse = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
-        if (!chapterResponse.ok) {
-          throw new Error(`Error al cargar el capítulo: ${chapterResponse.status}`);
-        }
-        const chapterData = await chapterResponse.json();
-        setChapter(chapterData);
-
-        // Obtener personajes solo si hay personajes disponibles
-        if (chapterData.characters && chapterData.characters.length > 0) {
-          const characterUrls = chapterData.characters;
-          const characterIds = characterUrls.map(url => url.split('/').pop());
-          
-          // Seleccionar los 2 primeros y 2 últimos personajes para la sección de episodio
-          const selectedEpisodeIds = [
-            ...characterIds.slice(0, 2),
-            ...characterIds.slice(-2)
-          ];
-
-          // Obtener los IDs de los personajes más populares
-          const topCharacterIds = getTopCharactersInEpisode(characterIds, id);
-
-          // Combinar los IDs únicos para hacer una sola llamada a la API
-          const uniqueIds = [...new Set([...selectedEpisodeIds, ...topCharacterIds])];
-
-          if (uniqueIds.length > 0) {
-            const charactersResponse = await fetch(`https://rickandmortyapi.com/api/character/${uniqueIds.join(',')}`);
-            if (!charactersResponse.ok) {
-              throw new Error(`Error al cargar los personajes: ${charactersResponse.status}`);
-            }
-            const charactersData = await charactersResponse.json();
-            const charactersArray = Array.isArray(charactersData) ? charactersData : [charactersData];
-
-            // Guardar todos los personajes en el estado
-            setAllCharacters(charactersArray);
-
-            // Separar los personajes en sus respectivas secciones
-            setEpisodeCharacters(
-              charactersArray.filter(char => selectedEpisodeIds.includes(char.id.toString()))
-            );
-            setTopCharacters(
-              charactersArray.filter(char => topCharacterIds.includes(char.id.toString()))
-            );
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchChapterDetails();
-  }, [id, navigate]);
-
-  // Efecto para actualizar los personajes favoritos cuando cambia likeCount
-  useEffect(() => {
-    if (chapter?.characters) {
-      const characterIds = chapter.characters.map(url => url.split('/').pop());
-      const newTopCharacterIds = getTopCharactersInEpisode(characterIds, id);
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
       
-      // Actualizar la lista de personajes top usando allCharacters como fuente de datos
-      const newTopCharacters = allCharacters.filter(char => 
-        newTopCharacterIds.includes(char.id.toString())
-      );
-      
-      setTopCharacters(newTopCharacters);
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      if (retries > 0) {
+        console.log(`Reintentando... (${MAX_RETRIES - retries + 1}/${MAX_RETRIES})`);
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+        return fetchWithRetry(url, options, retries - 1);
+      }
+      throw error;
     }
-  }, [likeCount, chapter, id, allCharacters]);
-
-  const handleCharacterLike = (characterId) => {
-    // Incrementar el contador para forzar la actualización
-    setLikeCount(prev => prev + 1);
   };
 
-  if (loading) return <div className="loading">Cargando detalles...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-  if (!chapter) return <div className="error">No se encontró el capítulo</div>;
+  const fetchChapterDetails = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Intentar obtener del caché primero
+      const cachedChapter = getCachedEpisode(id);
+      if (cachedChapter) {
+        setChapter(cachedChapter);
+      } else {
+        const data = await fetchWithRetry(`https://rickandmortyapi.com/api/episode/${id}`);
+        setChapter(data);
+        setCachedEpisode(id, data);
+      }
+
+      // Obtener detalles de los personajes
+      const characterPromises = chapter.characters.map(async url => {
+        const characterId = url.split('/').pop();
+        const cachedCharacter = getCachedCharacter(characterId);
+        if (cachedCharacter) {
+          return cachedCharacter;
+        }
+        const characterData = await fetchWithRetry(url);
+        setCachedCharacter(characterId, characterData);
+        return characterData;
+      });
+
+      const characterData = await Promise.all(characterPromises);
+      setCharacters(characterData);
+
+      // Seleccionar primeros 2 y últimos 2 personajes
+      const firstTwo = characterData.slice(0, 2);
+      const lastTwo = characterData.slice(-2);
+      setEpisodeCharacters([...firstTwo, ...lastTwo]);
+
+      // Obtener personajes más populares
+      const characterIds = characterData.map(char => char.id);
+      const topCharacterIds = getTopCharactersInEpisode(characterIds, id);
+      const topChars = characterData.filter(char => topCharacterIds.includes(char.id));
+      setTopCharacters(topChars);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      if (error.name === 'AbortError') {
+        setError('La solicitud tardó demasiado en completarse. Por favor, verifica tu conexión a internet.');
+      } else {
+        setError('No se pudo cargar la información del capítulo. Por favor, intente nuevamente más tarde.');
+      }
+      setRetryCount(prev => prev + 1);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!id) {
+      navigate('/');
+      return;
+    }
+    fetchChapterDetails();
+  }, [id, navigate, retryCount]);
+
+  const handleCharacterLike = () => {
+    const characterIds = characters.map(char => char.id);
+    const topCharacterIds = getTopCharactersInEpisode(characterIds, id);
+    const topChars = characters.filter(char => topCharacterIds.includes(char.id));
+    setTopCharacters(topChars);
+  };
+
+  if (loading) {
+    return (
+      <div className="chapter-details">
+        <div className="loading">
+          Cargando detalles del capítulo...
+          {retryCount > 0 && <div className="retry-info">Intento {retryCount} de {MAX_RETRIES}</div>}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="chapter-details">
+        <div className="error">
+          {error}
+          {retryCount < MAX_RETRIES && (
+            <button 
+              className="retry-button"
+              onClick={() => setRetryCount(prev => prev + 1)}
+            >
+              Reintentar
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  if (!chapter) {
+    return (
+      <div className="chapter-details">
+        <div className="error">No se encontró el capítulo</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="chapter-details-container">
+    <div className="chapter-details">
       <Navbar />
-      <h1 className="chapter-details-title">{chapter.name}</h1>
-      <div className="chapter-details-info">
-        <p className="episode-code">Código: {chapter.episode}</p>
-        <p className="air-date">Fecha de estreno: {chapter.air_date}</p>
-      </div>
-
-      {topCharacters.length > 0 && (
-        <div className="characters-section">
-          <h2 className="characters-title">Personajes Favoritos</h2>
-          <div className="characters-grid">
-            {topCharacters.map(character => (
-              <CharacterCard
-                key={`top-${character.id}-${likeCount}`}
-                characterId={character.id}
-                episodeId={id}
-                characterName={character.name}
-                imageUrl={character.image}
-                onDetailsClick={() => {}}
-                onLikeClick={() => {}}
-                disableLike={true}
-              />
-            ))}
+      <div className="chapter-details-content">
+        <div className="chapter-details-container">
+          <h1 className="chapter-details-title">{chapter.name}</h1>
+          <div className="chapter-details-info">
+            <p className="episode-code">Episodio: {chapter.episode}</p>
+            <p className="air-date">Fecha de emisión: {chapter.air_date}</p>
           </div>
         </div>
-      )}
 
-      {episodeCharacters.length > 0 && (
+        {topCharacters.length > 0 && (
+          <div className="characters-section">
+            <h2 className="characters-title">Personajes Favoritos</h2>
+            <div className="characters-grid">
+              {topCharacters.map(character => (
+                <CharacterCard
+                  key={character.id}
+                  characterId={character.id}
+                  episodeId={id}
+                  characterName={character.name}
+                  imageUrl={character.image}
+                  onLikeClick={handleCharacterLike}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="characters-section">
           <h2 className="characters-title">Personajes del Capítulo</h2>
           <div className="characters-grid">
             {episodeCharacters.map(character => (
               <CharacterCard
-                key={`episode-${character.id}-${likeCount}`}
+                key={character.id}
                 characterId={character.id}
                 episodeId={id}
                 characterName={character.name}
                 imageUrl={character.image}
-                onDetailsClick={() => {}}
-                onLikeClick={() => handleCharacterLike(character.id)}
-                disableLike={false}
+                onLikeClick={handleCharacterLike}
               />
             ))}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

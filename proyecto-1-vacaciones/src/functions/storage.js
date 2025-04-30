@@ -5,7 +5,8 @@ const CHARACTER_LIKES_PREFIX = 'character_likes_';
 
 // Funciones para capítulos
 export const getChapterLikes = (chapterId) => {
-  return parseInt(localStorage.getItem(`${CHAPTER_LIKES_PREFIX}${chapterId}`) || '0');
+  const likes = localStorage.getItem(`${CHAPTER_LIKES_PREFIX}${chapterId}`);
+  return likes ? parseInt(likes) : 0;
 };
 
 export const setChapterLikes = (chapterId, count) => {
@@ -13,7 +14,8 @@ export const setChapterLikes = (chapterId, count) => {
 };
 
 export const getChapterDislikes = (chapterId) => {
-  return parseInt(localStorage.getItem(`${CHAPTER_DISLIKES_PREFIX}${chapterId}`) || '0');
+  const dislikes = localStorage.getItem(`${CHAPTER_DISLIKES_PREFIX}${chapterId}`);
+  return dislikes ? parseInt(dislikes) : 0;
 };
 
 export const setChapterDislikes = (chapterId, count) => {
@@ -22,7 +24,8 @@ export const setChapterDislikes = (chapterId, count) => {
 
 // Funciones para personajes en episodios específicos
 export const getCharacterLikesInEpisode = (characterId, episodeId) => {
-  return parseInt(localStorage.getItem(`${CHARACTER_LIKES_PREFIX}${characterId}_ep${episodeId}`) || '0');
+  const likes = localStorage.getItem(`${CHARACTER_LIKES_PREFIX}${characterId}_ep${episodeId}`);
+  return likes ? parseInt(likes) : 0;
 };
 
 export const setCharacterLikesInEpisode = (characterId, episodeId, count) => {
@@ -31,16 +34,53 @@ export const setCharacterLikesInEpisode = (characterId, episodeId, count) => {
 
 // Función para obtener los personajes más populares de un episodio
 export const getTopCharactersInEpisode = (characterIds, episodeId, limit = 3) => {
-  // Obtener los likes de cada personaje
-  const characterLikes = characterIds.map(id => ({
+  const charactersWithLikes = characterIds.map(id => ({
     id,
     likes: getCharacterLikesInEpisode(id, episodeId)
   }));
 
-  // Ordenar por número de likes (de mayor a menor)
-  return characterLikes
+  return charactersWithLikes
     .sort((a, b) => b.likes - a.likes)
+    .filter(char => char.likes > 0)
     .slice(0, limit)
-    .filter(char => char.likes > 0) // Solo incluir personajes con likes
     .map(char => char.id);
+};
+
+// Funciones para el caché
+export const getCachedEpisode = (episodeId) => {
+  const cached = localStorage.getItem(`episode_${episodeId}`);
+  if (cached) {
+    const { data, timestamp } = JSON.parse(cached);
+    // El caché expira después de 1 hora
+    if (Date.now() - timestamp < 3600000) {
+      return data;
+    }
+  }
+  return null;
+};
+
+export const setCachedEpisode = (episodeId, data) => {
+  localStorage.setItem(`episode_${episodeId}`, JSON.stringify({
+    data,
+    timestamp: Date.now()
+  }));
+};
+
+export const getCachedCharacter = (characterId) => {
+  const cached = localStorage.getItem(`character_${characterId}`);
+  if (cached) {
+    const { data, timestamp } = JSON.parse(cached);
+    // El caché expira después de 1 hora
+    if (Date.now() - timestamp < 3600000) {
+      return data;
+    }
+  }
+  return null;
+};
+
+export const setCachedCharacter = (characterId, data) => {
+  localStorage.setItem(`character_${characterId}`, JSON.stringify({
+    data,
+    timestamp: Date.now()
+  }));
 }; 
