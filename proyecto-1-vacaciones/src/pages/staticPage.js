@@ -2,6 +2,7 @@ import React from 'react';
 import placeholderImage from '../images/placeholder.png';
 import static1Image from '../images/static1.png';
 import Navbar from './base/Navbar';
+import Footer from './base/Footer';
 import '../style/StaticPage.css';
 
 const StaticPage = () => {
@@ -23,6 +24,7 @@ const StaticPage = () => {
 
         A pesar de estar muy apegados, Rick y su nieto experimentan momentos en los que Summer Smith, hermana de Morty, se une en ocasiones a las pintorescas aventuras provocadas por Rick.
       </p>
+      <Footer />
     </div>
   );
 };
