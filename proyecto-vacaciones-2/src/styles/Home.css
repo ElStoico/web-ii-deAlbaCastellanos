@@ -30,6 +30,13 @@
   color: white;
   padding: 0 5%;
   max-width: 600px;
+  width: 100%;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 .hero-content h2 {
@@ -98,4 +105,39 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin: 1rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .locations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content h2 {
+    font-size: 1rem;
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .locations-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }

@@ -114,4 +114,43 @@
 
 .star-icon {
   color: #ffea00;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .location-card {
+    max-width: 100%;
+    margin: 0.5rem;
+  }
+
+  .image-container {
+    height: 200px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-container {
+    height: 180px;
+  }
+
+  .card-content {
+    padding: 0.8rem;
+  }
+
+  .capacity-info {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .capacity-item {
+    font-size: 0.8rem;
+  }
 } 
